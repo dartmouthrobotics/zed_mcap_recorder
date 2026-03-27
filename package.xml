@@ -4,7 +4,7 @@
   <name>zed_mcap_recorder</name>
   <version>0.0.0</version>
   <description>ROS 2 component node that records ZED compressed image and IMU topics to MCAP using rosbag2.</description>
-  <maintainer email="1143619249@qq.com">catabot-5</maintainer>
+  <maintainer email="alberto.quattrini.li@dartmouth.edu">Alberto Quattrini Li</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
