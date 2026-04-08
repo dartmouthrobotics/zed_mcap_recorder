@@ -191,7 +191,19 @@ private:
           bag_msg->time_stamp = pending->timestamp;
 
           auto& rcl_msg = serialized.get_rcl_serialized_message();
-          bag_msg->serialized_data = std::make_shared<rcutils_uint8_array_t>();
+          bag_msg->serialized_data = std::shared_ptr<rcutils_uint8_array_t>(
+            new rcutils_uint8_array_t,
+            [](rcutils_uint8_array_t * data) {
+              if (data != nullptr) {
+                if (data->buffer != nullptr) {
+                  auto fini_ret = rcutils_uint8_array_fini(data);
+                  if (fini_ret != RCUTILS_RET_OK) {
+                    rcutils_reset_error();
+                  }
+                }
+                delete data;
+              }
+            });
           *bag_msg->serialized_data = rcutils_get_zero_initialized_uint8_array();
           auto ret = rcutils_uint8_array_init(
             bag_msg->serialized_data.get(),
